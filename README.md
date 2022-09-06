@@ -27,8 +27,8 @@ https://data.edmonton.ca/dataset/Neighbourhood-Boundaries-2019/xu6q-xcmj
 
 ### Table Summary
 
-|               			| Data Collection Period | Column Count | Row Count (incl. heading)	|
+|               			| Data Collection Period | Column Count | Row Count (excl. heading)	|
 |:---:|:---:|:---:|:---:|
-| dbo.pro_historical  |		    2012-2021		     |		  21      |          3,798,630        |
+| dbo.pro_historical  |		    2012-2021		     |		  21      |          3,798,629        |
 | dbo.neighbourhoods	|		    2011-2022		     |	    7       |			        402       		|
-| dbo.geom			      |		      2019			     |		  4	      |			        399			      |
+| dbo.geom			      |		      2019			     |		  4	      |			        401			      |
