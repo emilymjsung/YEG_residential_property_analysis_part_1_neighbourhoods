@@ -28,16 +28,16 @@ FROM		yeg_property.dbo.pro_historical_6
 -- 1-2. Total row count vs. Unique row count: 3,798,629 vs. 423,114
 
 SELECT	COUNT([Account Number]) AS property_count
-	      , COUNT(DISTINCT([Account Number])) AS unique_property_count
-FROM	  yeg_property.dbo.pro_historical;
+	, COUNT(DISTINCT([Account Number])) AS unique_property_count
+FROM	yeg_property.dbo.pro_historical;
 
 -- 1-3. Check duplicates in 2 ways
 
 -- 1-3-1. Check with HAVING: each account should have 10 records for each year, 2012-2021 / no duplicates found
 
 SELECT		[Account Number]
-		      , COUNT(*) AS count
-FROM		  yeg_property.dbo.pro_historical
+		, COUNT(*) AS count
+FROM		yeg_property.dbo.pro_historical
 GROUP BY	[Account Number]
 HAVING		COUNT(*) > 10
 ORDER BY	COUNT(*) DESC;
@@ -45,51 +45,51 @@ ORDER BY	COUNT(*) DESC;
 -- 1-3-2. Check with DISTINCT: 337,298 accounts in 2012 and 413,809 accounts in 2021 / no duplicates found
 
 SELECT	COUNT([Account Number]) AS pro_count_2012
-	      , COUNT(DISTINCT([Account Number])) AS unique_pro_count_2012
-FROM	  yeg_property.dbo.pro_historical
-WHERE	  [Assessment Year] = 2012;
+	, COUNT(DISTINCT([Account Number])) AS unique_pro_count_2012
+FROM	yeg_property.dbo.pro_historical
+WHERE	[Assessment Year] = 2012;
 GO
 SELECT	COUNT([Account Number]) AS pro_count_2021
-	      , COUNT(DISTINCT([Account Number])) AS unique_pro_count_2021
-FROM	  yeg_property.dbo.pro_historical
-WHERE	  [Assessment Year] = 2021;
+	, COUNT(DISTINCT([Account Number])) AS unique_pro_count_2021
+FROM	yeg_property.dbo.pro_historical
+WHERE	[Assessment Year] = 2021;
 
 -- 2. Data Preparation
 
 -- 2-1. Create a new table "pro_historical_res" that only contains residential properties and selected columns for the analysis 
 
 SELECT	[Account Number]
-	      , [Assessment Year]
-	      , [House Number]
-	      , [Street Name] 
-	      , Latitude
-	      , Longitude
-	      , Neighbourhood
-	      , [Actual Year Built] 
-	      , Garage
-	      , Zoning
-	      , [Lot Size]
-	      , [Assessed Value] 
-INTO	  yeg_property.dbo.pro_historical_res 
-FROM	  yeg_property.dbo.pro_historical
-WHERE	  [Assessed Value] IS NOT NULL 
-	      AND [Assessed Value] <> 0
-	      AND (([Assessment Class 1] = 'RESIDENTIAL' AND [Assessment Class % 1] > 50)
-		    OR ([Assessment Class 2] = 'RESIDENTIAL' AND [Assessment Class % 2] > 50)
-		    OR ([Assessment Class 3] = 'RESIDENTIAL' AND [Assessment Class % 3] > 50));
+	, [Assessment Year]
+	, [House Number]
+	, [Street Name] 
+	, Latitude
+	, Longitude
+	, Neighbourhood
+	, [Actual Year Built] 
+	, Garage
+	, Zoning
+	, [Lot Size]
+	, [Assessed Value] 
+INTO	yeg_property.dbo.pro_historical_res 
+FROM	yeg_property.dbo.pro_historical
+WHERE	[Assessed Value] IS NOT NULL 
+	AND [Assessed Value] <> 0
+	AND (([Assessment Class 1] = 'RESIDENTIAL' AND [Assessment Class % 1] > 50)
+	OR ([Assessment Class 2] = 'RESIDENTIAL' AND [Assessment Class % 2] > 50)
+	OR ([Assessment Class 3] = 'RESIDENTIAL' AND [Assessment Class % 3] > 50));
 
 -- count the rows: 3,541,140 rows / 395,355 unique rows
 
 SELECT	COUNT([Account Number]) AS pro_res_count
-    	  , COUNT(DISTINCT([Account Number])) AS unique_pro_res_count
-FROM	  yeg_property.dbo.pro_historical_res;
+    	, COUNT(DISTINCT([Account Number])) AS unique_pro_res_count
+FROM	yeg_property.dbo.pro_historical_res;
 
 -- 2-2. Change “Y/N” to “Yes/No” in the Garage column
 -- 3,541,140 rows affected. No null values in the Garage column.
 
 UPDATE  yeg_property.dbo.pro_historical_res
 SET     Garage = CASE	WHEN Garage = 'Y' THEN 'Yes'
-			  WHEN Garage = 'N' THEN 'No' END;
+			WHEN Garage = 'N' THEN 'No' END;
 
 -- 2-3. Build InitCap function, change and update the string format of the columns, [Neighbourhood] and [Street Name]
 
@@ -150,14 +150,14 @@ SET     [Street Name] = dbo.InitCap(LEFT([Street Name], LEN([Street Name]) - 3))
 -- we see some invalid neighbourhood names that seem to be a part of the column, [Geometry Multipolygon]
 
 SELECT	COUNT([Descriptive Name]) AS nbh_count
-			  , COUNT(DISTINCT([Descriptive Name])) AS unique_nbh_count
-FROM		[yeg_property].[dbo].[neighbourhoods];
+	, COUNT(DISTINCT([Descriptive Name])) AS unique_nbh_count
+FROM	[yeg_property].[dbo].[neighbourhoods];
 
 -- 1-2. Check nulls in the 2 columns we need, [Descriptive Name] and [Geometry Multipolygon]: no nulls
 
 SELECT	*
-FROM		[yeg_property].[dbo].[neighbourhoods]
-WHERE		[Descriptive Name] IS NULL OR [Geometry Multipolygon] IS NULL;
+FROM	[yeg_property].[dbo].[neighbourhoods]
+WHERE	[Descriptive Name] IS NULL OR [Geometry Multipolygon] IS NULL;
 
 
 -- 2. Data cleaning
@@ -167,14 +167,14 @@ WHERE		[Descriptive Name] IS NULL OR [Geometry Multipolygon] IS NULL;
 -- check the rows where the value of [Descriptive Name] contains numbers only: 8 rows
 
 SELECT	*
-FROM		[yeg_property].[dbo].[neighbourhoods]
-WHERE		[Descriptive Name] LIKE '%[0-9]';
+FROM	[yeg_property].[dbo].[neighbourhoods]
+WHERE	[Descriptive Name] LIKE '%[0-9]';
 
 -- check the rows where the value of [Neighbourhood Name] contains numbers only: 8 rows
 
 SELECT	*
-FROM		[yeg_property].[dbo].[neighbourhoods]
-WHERE		[Neighbourhood Name] LIKE '%[0-9]';
+FROM	[yeg_property].[dbo].[neighbourhoods]
+WHERE	[Neighbourhood Name] LIKE '%[0-9]';
 
 -- drop the rows with the invalid data: 8 rows affected
 
@@ -185,5 +185,6 @@ WHERE	[Descriptive Name] LIKE '%[0-9]';
 -- confirm the updated row counts: 402
 
 SELECT	COUNT([Descriptive Name]) AS nbh_count
-			  , COUNT(DISTINCT([Descriptive Name])) AS unique_nbh_count
-FROM		[yeg_property].[dbo].[neighbourhoods];
+	, COUNT(DISTINCT([Descriptive Name])) AS unique_nbh_count
+FROM	[yeg_property].[dbo].[neighbourhoods];
+
