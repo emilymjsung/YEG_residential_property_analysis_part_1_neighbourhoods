@@ -146,45 +146,20 @@ SET     [Street Name] = dbo.InitCap(LEFT([Street Name], LEN([Street Name]) - 3))
 
 -- 1. Data check
 
--- 1-1. Total row count vs. Unique row count: 410
--- we see some invalid neighbourhood names that seem to be a part of the column, [Geometry Multipolygon]
+-- original file from the link (in README.md) has 7 columns and we only need 2 of them – “Descriptive Name” and “Geometry Multipolygon”
+-- some of the cells in the “Geometry Multipolygon” column have over 70K characters and get truncated and/or don’t show correctly when read in Microsoft Excel
+-- read the file in Python, subset the data with the 2 columns we need, export the data frame as a CSV file, and import it into SQL Server 
+-- (TIPS: make sure the data type of the “Geometry Multipolygon” column is set to “NVARCHAR(MAX)” which has a max size of 536,870,912 characters)
+-- the Python code for this is in “importing_neighbourhood_csv.py” in this repository
 
-SELECT	COUNT([Descriptive Name]) AS nbh_count
-	, COUNT(DISTINCT([Descriptive Name])) AS unique_nbh_count
-FROM	[yeg_property].[dbo].[neighbourhoods];
+-- 1-1. Total row count vs. Unique row count: 402
 
--- 1-2. Check nulls in the 2 columns we need, [Descriptive Name] and [Geometry Multipolygon]: no nulls
+SELECT		COUNT([Descriptive_Name]) AS nbh_count
+			, COUNT(DISTINCT([Descriptive_Name])) AS unique_nbh_count
+FROM		[yeg_property].[dbo].[neighbourhoods];
 
-SELECT	*
-FROM	[yeg_property].[dbo].[neighbourhoods]
-WHERE	[Descriptive Name] IS NULL OR [Geometry Multipolygon] IS NULL;
+-- 1-2. Check nulls: no null values found
 
-
--- 2. Data cleaning
-
--- 2-1. Drop the rows with the invalid data
-
--- check the rows where the value of [Descriptive Name] contains numbers only: 8 rows
-
-SELECT	*
-FROM	[yeg_property].[dbo].[neighbourhoods]
-WHERE	[Descriptive Name] LIKE '%[0-9]';
-
--- check the rows where the value of [Neighbourhood Name] contains numbers only: 8 rows
-
-SELECT	*
-FROM	[yeg_property].[dbo].[neighbourhoods]
-WHERE	[Neighbourhood Name] LIKE '%[0-9]';
-
--- drop the rows with the invalid data: 8 rows affected
-
-DELETE	
-FROM	[yeg_property].[dbo].[neighbourhoods]
-WHERE	[Descriptive Name] LIKE '%[0-9]';
-
--- confirm the updated row counts: 402
-
-SELECT	COUNT([Descriptive Name]) AS nbh_count
-	, COUNT(DISTINCT([Descriptive Name])) AS unique_nbh_count
-FROM	[yeg_property].[dbo].[neighbourhoods];
-
+SELECT		*
+FROM		[yeg_property].[dbo].[neighbourhoods]
+WHERE		[Descriptive_Name] IS NULL OR [Geometry_Multipolygon] IS NULL;
