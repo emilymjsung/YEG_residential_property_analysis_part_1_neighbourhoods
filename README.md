@@ -22,13 +22,10 @@ I visualized these data in Tableau. You can see it [here](https://public.tableau
 https://data.edmonton.ca/City-Administration/Property-Assessment-Data-Historical-/qi6a-xuwt
 2) dbo.neighbourhoods (downloaded on Mar 23, 2022): 
 https://data.edmonton.ca/City-Administration/City-of-Edmonton-Neighbourhoods/65fr-66s6
-3) dbo.geom (downloaded on Mar 25, 2022):
-https://data.edmonton.ca/dataset/Neighbourhood-Boundaries-2019/xu6q-xcmj
 
 ### Table Summary
 
 |               			| Data Collection Period | Column Count | Row Count (excl. heading)	|
 |:---:|:---:|:---:|:---:|
 | dbo.pro_historical  |		    2012-2021		     |		  21      |          3,798,629        |
-| dbo.neighbourhoods	|		    2011-2022		     |	    7       |			        410       		|
-| dbo.geom			      |		      2019			     |		  4	      |			        404			      |
+| dbo.neighbourhoods	|		    2011-2022		     |	    7       |			        402       		|
