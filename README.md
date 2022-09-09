@@ -8,10 +8,10 @@ This repository holds the code and queries from the project "YEG Residential Pro
 ### Why?
 With the wild fluctuations we've seen this year (2022) it is difficult to know what the "real" value of a property is. Looking at historical trends can give us a better idea of how much properties in an area are worth. Looking long term, the fluctuations should even out (right?). As I was house hunting, I wanted to look at the historical data for different neighbourhoods in the city of Edmonton. The larger, more popular neighbourhoods have more amenities suitable for a growing family like my own, but can also busier and more expensive.
 <br>
-<br>**In Part 1, we look into Top 20 largest neighbourhoods in the city.** In Part 2, we focus on the Zone 55 of the city and analyze the properties on MLS ([Multiple Listing Service](https://www.nar.realtor/nar-doj-settlement/multiple-listing-service-mls-what-is-it)) listing to gain insights.<br>
+<br>**In Part 1, we look into the top 20 largest neighbourhoods in the city.** In Part 2, we focus on the Zone 55 of the city and analyze the properties on MLS ([Multiple Listing Service](https://www.nar.realtor/nar-doj-settlement/multiple-listing-service-mls-what-is-it)) listing to gain insights.<br>
 <br>
 Some of the questions I wanted to look at in this analysis are:
-- What are the Top 20 biggest neighbourhoods in the city in 2021?
+- What are the top 20 largest neighbourhoods in the city in 2021?
 - What are the average and median assessed property values in these neighbourhoods?
 - How have the property values in these neighbourhoods changed over the last 10 years?
 
