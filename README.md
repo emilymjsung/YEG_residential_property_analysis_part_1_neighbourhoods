@@ -15,7 +15,7 @@ Some of the questions I wanted to look at in this analysis are:
 - What are the average and median assessed property values in these neighbourhoods?
 - How have the property values in these neighbourhoods changed over the last 10 years?
 
-I visualized these data in Tableau. You can see it [here](https://public.tableau.com/app/profile/emily1078/viz/shared/RWM27BD4D).
+I visualized these data in Tableau. You can see it [here](https://public.tableau.com/views/YEG_residential_property_analysis_part_1_neighbourhoods/Story1?:language=en-US&:display_count=n&:origin=viz_share_link).
 
 ### Data source 
 1) dbo.pro_historical (downloaded on Jan 18, 2022):
